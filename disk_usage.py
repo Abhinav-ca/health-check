@@ -22,3 +22,4 @@ def main():
     print("everythin ok")
 if __name__=="__main__":
     main()
+    prin('done')
