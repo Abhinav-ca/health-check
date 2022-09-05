@@ -9,7 +9,7 @@ def check_disk_full(disk, min_abs,min_percent):
     du=shutil.disk_usage(disk)
     percent_free=100*du.free/du.total
     gigabyte_free=du.free/2**30
-    if percent_free < min_percent or gigabyte_free < min_abs:
+    if gigabyte_free < min_abs or percent_free < min_percent:
         return True
     return False
 def main():
