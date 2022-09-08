@@ -9,19 +9,22 @@ def check_disk_full(disk, min_gb,min_percent):
     du=shutil.disk_usage(disk)
     percent_free=100*du.free/du.total
     gigabyte_free=du.free/2**30
-	# calculating percent and gigabyte free with the help of shutil.disk_usage func
+
+     #calculating th percent free and gigabyte free wih du func
     if gigabyte_free < min_gb or percent_free < min_percent:
 
         return True
     return False
 def main():
-    if check_reboot():
-        print("reboot-required")
-        sys.exit(1)
-    if check_disk_full(disk='/',min_gb=2,min_percent=10):
-        print('disk full.')
-        sys.exit(1)
-    print("everythin ok")
+    check_dict={check_reboot():'reboot-required',check_disk_full(disk='/',min_gb=2,min_percent=10):'disk full' }
+    y=True
+    for func,ret in check_dict:
+        if not func:
+            y=False      
+            print(ret)          
+            sys.exit(1)
+    if y==True:
+        return "everythin ok"    
 if __name__=="__main__":
     main()
-    prin('done')
+
