@@ -16,15 +16,13 @@ def check_disk_full(disk, min_gb,min_percent):
         return True
     return False
 def main():
-    check_dict={check_reboot():'reboot-required',check_disk_full(disk='/',min_gb=2,min_percent=10):'disk full' }
-    y=True
-    for func,ret in check_dict:
-        if not func:
-            y=False      
-            print(ret)          
-            sys.exit(1)
-    if y==True:
-        return "everythin ok"    
+    if check_reboot():
+        print("reboot-required")
+        sys.exit(1)
+    if check_disk_full(disk='/',min_gb=2,min_percent=10):
+        print('disk full.')
+        sys.exit(1)
+    print("everythin ok")
 if __name__=="__main__":
     main()
-
+    prin('done')
