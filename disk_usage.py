@@ -5,8 +5,6 @@ import sys
 def check_reboot():
     # return true if computer has a pending reboot
     return os.path.exists("/run/reboot_required")
-
-
 def check_disk_full(disk, min_gb,min_percent):
     du=shutil.disk_usage(disk)
     percent_free=100*du.free/du.total
@@ -17,11 +15,6 @@ def check_disk_full(disk, min_gb,min_percent):
 
         return True
     return False
-
-
-def check_root_disk():
-    return check_disk_full(disk='/',min_gb=2,min_percent=10)
-
 def main():
     check_list=[(check_reboot,'reboot-required'), (check_root_disk,'disk full') ]
     y=True
