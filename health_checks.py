@@ -2,6 +2,7 @@
 import os
 import shutil
 import sys
+import socket
 def check_reboot():
     # return true if computer has a pending reboot
     return os.path.exists("/run/reboot_required")
@@ -22,8 +23,14 @@ def check_cpu_constraint():
     #return true if CPU is having too mush usage, false otherwise
     return psutil.cpu_percent(1)>75
 
+def check_no_network():
+    try:
+        socket.gethostbyname('www.google.com')
+        return False
+    except:
+        return True
 def main():
-    func={check_reboot:"reboot-required",check_root_full:'disk full',check_cpu_constraint:'CPU load is too high!'}
+    func={check_reboot:"reboot-required",check_root_full:'disk full',check_cpu_constraint:'CPU load is too high!',check_no_network:'no working network'}
     ok=True
     for f in func: 
         if f():
@@ -31,7 +38,7 @@ def main():
             ok=False
     if not ok:
         sys.exit(1)
-    print("everythin ok")
+    print("everything ok!")
 if __name__=="__main__":
     main()
     
