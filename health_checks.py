@@ -25,6 +25,7 @@ def check_cpu_constraint():
 
 def check_no_network():
     try:
+        # returns True if no network
         socket.gethostbyname('www.google.com')
         return False
     except:
