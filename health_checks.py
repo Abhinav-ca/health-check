@@ -17,8 +17,13 @@ def check_disk_full(disk, min_gb,min_percent):
     return False
 def check_root_full():
     return check_disk_full(disk='/',min_gb=2,min_percent=10)
+
+def check_cpu_constraint():
+    #return true if CPU is having too mush usage, false otherwise
+    return psutil.cpu_percent(1)>75
+
 def main():
-    func={check_reboot:"reboot-required",check_root_full:'disk full'}
+    func={check_reboot:"reboot-required",check_root_full:'disk full',check_cpu_constraint:'CPU load is too high!'}
     ok=True
     for f in func: 
         if f():
