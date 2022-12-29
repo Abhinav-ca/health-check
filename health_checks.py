@@ -42,23 +42,26 @@ def run(f1,funcf):
         ok=funcf
     with open('ok','a') as f:
         if ok!='':
-            f.write((str(ok)+'\n'))
+            f.write('\n'+ok)
 
 def main():
-    func={check_reboot:"reboot-required",check_root_full:'disk full',check_cpu_constraint:'CPU load is too high!',check_no_network:'no working network'}
+    func={check_reboot:"reboot-required!",check_root_full:'disk full!',check_cpu_constraint:'CPU load is too high!',check_no_network:'no working network!'}
     for f in func: 
         executor.submit(run,f,func[f])
     print('waiting for threads to complete')
     executor.shutdown()
-    with open('ok') as f2:
-        a=f2.read()
-        if a=='':
-            print('Congrats Everything Ok')
-            os.remove('ok')
-            sys.exit(0)
-        print(a)
-        sys.exit(1)
+    f2= open('ok')
+    a=f2.read()[1:]
+    if a=='':
+        print('Congrats Everything Ok!')
+        f2.close()
         os.remove('ok')
+        sys.exit(0)
+    print(a)
+    f2.close()
+    os.remove('ok')
+    sys.exit(1)
+       
 if __name__=="__main__":
     main()
     
